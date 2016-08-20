@@ -24,6 +24,14 @@ int main()
 		{
 			TheGame.ReadGameStateFromInput();
 		}
+		else if (input.length() == 1 && input[0] == 'c')
+		{
+			TheGame.Reset();
+		}
+		else if (input.length() == 2 && input == "?s")
+		{
+
+		}
 	}
     return 0;
 }

@@ -16,12 +16,15 @@ public:
 
 	enum BlockColors {Black = 0, Blue, Cyan, Green, Magenta, Orange, Red, Yellow};
 
+	int GetScore() const;
 	void PrintGameState() const;
 
+	void Reset();
 	void ReadGameStateFromInput();
 
 private:
 
 	int GameGrid[Rows][Cols] = { { 0 } };
+	int Score = 0;
 };
 
