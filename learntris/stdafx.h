@@ -12,10 +12,15 @@
 
 
 
-// reference additional headers your program requires here
+// standard library includes
 #include <iostream>
 #include <utility>
 #include <string>
 #include <sstream>
+
+// custom includes
+#include "TetrisGame.h"
+#include "DisplayManager.h"
+#include "InputManager.h"
 
 

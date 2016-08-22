@@ -16,15 +16,18 @@ public:
 
 	enum BlockColors {Black = 0, Blue, Cyan, Green, Magenta, Orange, Red, Yellow};
 
-	int GetScore() const;
-	void PrintGameState() const;
+	// used to return a pointer to a two dimentional array from a function
+	typedef int(*GameGrid)[Cols]; // TODO is there a better way to do this??
 
-	void Reset();
-	void ReadGameStateFromInput();
+	int GetScore() const;
+	GameGrid GetBoardState();
+
+	void ClearBoardState();
+	void SetBoardStateAtPosition(int Col, int Row, int Data);
 
 private:
 
-	int GameGrid[Rows][Cols] = { { 0 } };
+	int GameGridData[Rows][Cols] = { { 0 } };
 	int Score = 0;
 };
 
