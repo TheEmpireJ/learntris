@@ -78,6 +78,10 @@ int main()
 		{
 			DisplayManager.PrintScore();
 		}
+		else if (input.length() == 2 && input == "?n") // output the number of rows cleared so far
+		{
+			DisplayManager.PrintRowsCleared();
+		}
 	}
     return 0;
 }

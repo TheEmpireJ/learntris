@@ -13,6 +13,7 @@ public:
 	void Initialize(TetrisGame* TheGame);
 	void PrintBoardState() const;
 	void PrintScore() const;
+	void PrintRowsCleared() const;
 
 private:
 	TetrisGame* pAttachedGame = nullptr;

@@ -64,5 +64,12 @@ void TetrisDisplayManager::PrintBoardState() const
 
 void TetrisDisplayManager::PrintScore() const
 {
+	if (!pAttachedGame) { return; }
 	std::cout << pAttachedGame->GetScore() << std::endl;
+}
+
+void TetrisDisplayManager::PrintRowsCleared() const
+{
+	if (!pAttachedGame) { return; }
+	std::cout << pAttachedGame->GetRowsCleared() << std::endl;
 }

@@ -20,6 +20,7 @@ public:
 	typedef int(*GameGrid)[Cols]; // TODO is there a better way to do this??
 
 	int GetScore() const;
+	int GetRowsCleared() const;
 	GameGrid GetBoardState();
 
 	void ClearBoardState();
@@ -29,5 +30,6 @@ private:
 
 	int GameGridData[Rows][Cols] = { { 0 } };
 	int Score = 0;
+	int RowsCleared = 0;
 };
 

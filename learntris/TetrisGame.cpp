@@ -12,10 +12,8 @@ TetrisGame::~TetrisGame()
 {
 }
 
-int TetrisGame::GetScore() const
-{
-	return Score;
-}
+int TetrisGame::GetScore() const { return Score; }
+int TetrisGame::GetRowsCleared() const { return RowsCleared; }
 
  TetrisGame::GameGrid TetrisGame::GetBoardState()
 {
