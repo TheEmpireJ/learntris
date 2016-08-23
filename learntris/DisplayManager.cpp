@@ -11,23 +11,16 @@ TetrisDisplayManager::~TetrisDisplayManager()
 {
 }
 
-// Point this instance to the objects it needs to know about.
-void TetrisDisplayManager::Initialize(TetrisGame * TheGame)
-{
-	pAttachedGame = TheGame;
-}
 
-void TetrisDisplayManager::PrintBoardState() const
+void TetrisDisplayManager::PrintBoardState(TetrisGame* TheGame) const
 {
-	if (!pAttachedGame) { return; } // pointer protection. must have a game to display!
-
-	TetrisGame::GameGrid GameGrid = pAttachedGame->GetBoardState();
+	if (!TheGame) { return; } // pointer protection. must have a game to display!
 
 	for (int r = 0; r < TetrisGame::Rows; r++)
 	{
 		for (int c = 0; c < TetrisGame::Cols; c++)
 		{
-			switch (GameGrid[r][c])
+			switch (TheGame->GetBoardStateAtPosition(r,c))
 			{
 			case TetrisGame::Blue:
 				std::cout << "b ";
@@ -50,7 +43,7 @@ void TetrisDisplayManager::PrintBoardState() const
 			case TetrisGame::Yellow:
 				std::cout << "y ";
 				break;
-			case TetrisGame::Black:
+			case TetrisGame::Blank:
 				std::cout << ". "; // represents blank space
 				break;
 			default:
@@ -62,14 +55,14 @@ void TetrisDisplayManager::PrintBoardState() const
 	}
 }
 
-void TetrisDisplayManager::PrintScore() const
+void TetrisDisplayManager::PrintScore(TetrisGame* TheGame) const
 {
-	if (!pAttachedGame) { return; }
-	std::cout << pAttachedGame->GetScore() << std::endl;
+	if (!TheGame) { return; }
+	std::cout << TheGame->GetScore() << std::endl;
 }
 
-void TetrisDisplayManager::PrintRowsCleared() const
+void TetrisDisplayManager::PrintRowsCleared(TetrisGame* TheGame) const
 {
-	if (!pAttachedGame) { return; }
-	std::cout << pAttachedGame->GetRowsCleared() << std::endl;
+	if (!TheGame) { return; }
+	std::cout << TheGame->GetRowsCleared() << std::endl;
 }

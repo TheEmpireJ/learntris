@@ -2,6 +2,7 @@
 
 // forward declarations
 class TetrisGame;
+class Tetramino;
 
 class TetrisDisplayManager
 {
@@ -10,12 +11,10 @@ public:
 	~TetrisDisplayManager();
 
 	// Point this instance to the objects it needs to know about.
-	void Initialize(TetrisGame* TheGame);
-	void PrintBoardState() const;
-	void PrintScore() const;
-	void PrintRowsCleared() const;
+	void PrintBoardState(TetrisGame* TheGame) const;
+	void PrintScore(TetrisGame* TheGame) const;
+	void PrintRowsCleared(TetrisGame* TheGame) const;
 
 private:
-	TetrisGame* pAttachedGame = nullptr;
 };
 

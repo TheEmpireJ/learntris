@@ -16,7 +16,7 @@ void ReadGameStateFromInput(TetrisGame* TheGame)
 			switch (input[c * 2]) // c * 2 accounts for spaces
 			{
 			case '.':
-				TheGame->SetBoardStateAtPosition(r, c, TetrisGame::Black);
+				TheGame->SetBoardStateAtPosition(r, c, TetrisGame::Blank);
 				break;
 			case 'b':
 				TheGame->SetBoardStateAtPosition(r, c, TetrisGame::Blue);
@@ -53,8 +53,6 @@ int main()
 	TetrisDisplayManager DisplayManager;
 	TetrisInputManager InputManager;
 
-	DisplayManager.Initialize(&TheGame);
-
 	while (true)
 	{
 		// TODO refactor getting/interperating input
@@ -64,7 +62,7 @@ int main()
 		if (input.length() == 1 && input[0] == 'q') { return 0; } // quit if 'q' is typed
 		else if (input.length() == 1 && input[0] == 'p') // print the current game state matrix if 'p' is typed
 		{
-			DisplayManager.PrintBoardState();
+			DisplayManager.PrintBoardState(&TheGame);
 		}
 		else if (input.length() == 1 && input[0] == 'g') // read in the next lines to set the game board.
 		{
@@ -76,11 +74,23 @@ int main()
 		}
 		else if (input.length() == 2 && input == "?s") // output the score
 		{
-			DisplayManager.PrintScore();
+			DisplayManager.PrintScore(&TheGame);
 		}
 		else if (input.length() == 2 && input == "?n") // output the number of rows cleared so far
 		{
-			DisplayManager.PrintRowsCleared();
+			DisplayManager.PrintRowsCleared(&TheGame);
+		}
+		else if (input.length() == 1 && input[0] == 's') // run one step of the simulation
+		{
+			TheGame.Simulate();
+		}
+		else if (input.length() == 1 && input[0] == 't') // print the current tetramino
+		{
+
+		}
+		else if (input.length() == 1 && input[0] == 'I') // change the current tetramino to "I"
+		{
+
 		}
 	}
     return 0;

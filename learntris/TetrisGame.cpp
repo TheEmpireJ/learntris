@@ -4,7 +4,7 @@
 
 TetrisGame::TetrisGame()
 {
-	//GameGrid[10][22] = { 0 };
+	//GameGridData = { {0,0,0,0,0,0,0,0,0,0} };
 }
 
 
@@ -15,9 +15,14 @@ TetrisGame::~TetrisGame()
 int TetrisGame::GetScore() const { return Score; }
 int TetrisGame::GetRowsCleared() const { return RowsCleared; }
 
- TetrisGame::GameGrid TetrisGame::GetBoardState()
+int TetrisGame::GetBoardStateAtPosition(int Row, int Col) const
 {
-	return GameGridData;
+	return GameGridData[Row*Cols + Col];
+}
+
+TetrisGame::GameGrid* TetrisGame::GetBoardState()
+{
+	return &GameGridData;
 }
 
 void TetrisGame::ClearBoardState()
@@ -26,14 +31,54 @@ void TetrisGame::ClearBoardState()
 	{
 		for (int c = 0; c < Cols; c++)
 		{
-			GameGridData[r][c] = Black;
+			GameGridData[r * Cols + c] = Blank;
 		}
 	}
 }
 
-void TetrisGame::SetBoardStateAtPosition(int Col, int Row, int Data)
+void TetrisGame::SetBoardStateAtPosition(int Row, int Col, int Data)
 {
-	GameGridData[Col][Row] = Data; // TODO add validation
+	GameGridData[Row*Cols + Col] = Data; // TODO add validation
+}
+
+void TetrisGame::Simulate()
+{
+	// loop though all rows
+	for (int r = 0; r < Rows; r++)
+	{
+		// if row is full
+		if (IsRowFull(r))
+		{
+			RowsCleared++;
+			Score += OneRowScore;
+			ClearRow(r);
+		}
+	}
+}
+
+bool TetrisGame::IsRowFull(int Row) const
+{
+	bool RowFull = true;
+
+	for (int c = 0; c < Cols; c++)
+	{
+		if (GameGridData[Row*Cols + c] == Blank)
+		{
+			RowFull = false;
+			break;
+		}
+	}
+	return RowFull;
+}
+
+void TetrisGame::ClearRow(int Row)
+{
+	// TODO make higher rows drop down here as well?
+	for (int c = 0; c < Cols; c++)
+	{
+		GameGridData[Row*Cols + c] = Blank;
+	}
+	return;
 }
 
 

@@ -17,10 +17,11 @@
 #include <utility>
 #include <string>
 #include <sstream>
+#include <array>
 
 // custom includes
 #include "TetrisGame.h"
 #include "DisplayManager.h"
 #include "InputManager.h"
-
+#include "Tetramino.h"
 

@@ -1,6 +1,11 @@
-/* This class handles all game state */
-
 #pragma once
+#include <array>
+#include "Tetramino.h"
+
+// forward declarations
+// class Tetramino; // this is not enough here...
+
+/* This class handles all game state */
 class TetrisGame
 {
 public:
@@ -11,25 +16,62 @@ public:
 	enum Vars
 	{
 		Cols = 10,
-		Rows = 22
+		Rows = 22,
+		OneRowScore = 100,
+		TwoRowsScore = 220,
+		ThreeRowsScore = 450,
+		FourRowsScore = 800
 	};
 
-	enum BlockColors {Black = 0, Blue, Cyan, Green, Magenta, Orange, Red, Yellow};
+	enum BlockColor {Blank = 0, Blue, Cyan, Green, Magenta, Orange, Red, Yellow}; // TODO change to enum class?
 
-	// used to return a pointer to a two dimentional array from a function
-	typedef int(*GameGrid)[Cols]; // TODO is there a better way to do this??
+	typedef std::array<int, Rows * Cols> GameGrid; // for easier reading
 
 	int GetScore() const;
 	int GetRowsCleared() const;
-	GameGrid GetBoardState();
+	int GetBoardStateAtPosition(int Row, int Col) const;
+	GameGrid* GetBoardState(); // TODO this is probably dangerous and uneccessary.
 
 	void ClearBoardState();
-	void SetBoardStateAtPosition(int Col, int Row, int Data);
+	void SetBoardStateAtPosition(int Row, int Col, int Data);
+
+	// checks for completed rows and updates the score and rows cleared
+	void Simulate();
 
 private:
 
-	int GameGridData[Rows][Cols] = { { 0 } };
+	GameGrid GameGridData = {0};
+	 /*{ 
+		0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		Green,Green,Green,Green,Green,Green,Green,Green,Green,Green,
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0, 
+		0,0,0,0,0,0,0,0,0,0
+	}; // */
+
+	Tetramino CurrentTetramino;
+
 	int Score = 0;
 	int RowsCleared = 0;
+
+	bool IsRowFull(int Row) const;
+	void ClearRow(int Row);
 };
 
