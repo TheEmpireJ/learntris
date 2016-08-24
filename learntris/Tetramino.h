@@ -1,7 +1,6 @@
 #pragma once
-#include<array>
 
-class TetrisGame; // this is not enough?
+class TetrisGame;
 
 class Tetramino
 {
@@ -12,9 +11,10 @@ public:
 	enum TetType { Itet, Otet, Ztet, Stet, Ltet, Jtet, Ttet };
 	typedef std::array<int, 4*4> ShapeGrid;
 
-	TetType GetTetType() const;
-	int GetShapeDataAtPosition() const;
-	void GetPosition(int &OutRow, int &OutCol);
+	//TetType GetTetType() const;
+	int GetShapeDataAtPosition(int Row, int Col) const;
+	int GetShapeSize() const;
+	//void GetPosition(int &OutRow, int &OutCol);
 
 	// sets the tetramino type and resets to the starting position
 	void SetTetType(TetType type);
@@ -32,5 +32,11 @@ private:
 	TetrisGame* CurrentGame;
 
 	static const ShapeGrid IInitialShapeData;
+	static const ShapeGrid OInitialShapeData;
+	static const ShapeGrid ZInitialShapeData;
+	static const ShapeGrid SInitialShapeData;
+	static const ShapeGrid LInitialShapeData;
+	static const ShapeGrid JInitialShapeData;
+	static const ShapeGrid TInitialShapeData;
 };
 

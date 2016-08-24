@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "DisplayManager.h"
-
+#include "Tetramino.h"
+#include "TetrisGame.h"
 
 TetrisDisplayManager::TetrisDisplayManager()
 {
@@ -65,4 +66,48 @@ void TetrisDisplayManager::PrintRowsCleared(TetrisGame* TheGame) const
 {
 	if (!TheGame) { return; }
 	std::cout << TheGame->GetRowsCleared() << std::endl;
+}
+
+void TetrisDisplayManager::PrintCurrentTetramino(Tetramino* CurrentTetramino)
+{
+	if (!CurrentTetramino) { return; }
+	int size = CurrentTetramino->GetShapeSize();
+
+	for (int r = 0; r < size; r++)
+	{
+		for (int c = 0; c < size; c++)
+		{
+			switch (CurrentTetramino->GetShapeDataAtPosition(r,c))
+			{
+			case TetrisGame::Blue:
+				std::cout << "b ";
+				break;
+			case TetrisGame::Cyan:
+				std::cout << "c ";
+				break;
+			case TetrisGame::Green:
+				std::cout << "g ";
+				break;
+			case TetrisGame::Magenta:
+				std::cout << "m ";
+				break;
+			case TetrisGame::Orange:
+				std::cout << "o ";
+				break;
+			case TetrisGame::Red:
+				std::cout << "r ";
+				break;
+			case TetrisGame::Yellow:
+				std::cout << "y ";
+				break;
+			case TetrisGame::Blank:
+				std::cout << ". "; // represents blank space
+				break;
+			default:
+				break;
+				// TODO why is there bad data?
+			}
+		}
+		std::cout << std::endl;
+	}
 }

@@ -1,9 +1,6 @@
 #pragma once
-#include <array>
+#include "DisplayManager.h"
 #include "Tetramino.h"
-
-// forward declarations
-// class Tetramino; // this is not enough here...
 
 /* This class handles all game state */
 class TetrisGame
@@ -30,13 +27,17 @@ public:
 	int GetScore() const;
 	int GetRowsCleared() const;
 	int GetBoardStateAtPosition(int Row, int Col) const;
+	Tetramino* GetCurrentTetramino();
 	GameGrid* GetBoardState(); // TODO this is probably dangerous and uneccessary.
 
+	void ProcessInput();
+	void ReadGameStateFromInput();
 	void ClearBoardState();
 	void SetBoardStateAtPosition(int Row, int Col, int Data);
 
 	// checks for completed rows and updates the score and rows cleared
 	void Simulate();
+	void Run();
 
 private:
 
@@ -67,6 +68,9 @@ private:
 	}; // */
 
 	Tetramino CurrentTetramino;
+	TetrisDisplayManager DisplayManager;
+
+	bool bKeepRunning = true;
 
 	int Score = 0;
 	int RowsCleared = 0;
