@@ -41,7 +41,7 @@ private:
 	int MinRow, MaxRow, MinCol, MaxCol;
 
 	void FindExtents();
-
+	bool CheckForCollisionWithGame(int ChkRow, int ChkCol, ShapeGrid* ChkGrid, TetrisGame* Game);
 
 	static const ShapeGrid IInitialShapeData;
 	static const ShapeGrid OInitialShapeData;

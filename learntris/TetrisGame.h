@@ -77,5 +77,6 @@ private:
 
 	bool IsRowFull(int Row) const;
 	void ClearRow(int Row);
+	void XferTetToGrid();
 };
 

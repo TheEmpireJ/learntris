@@ -163,7 +163,12 @@ void TetrisGame::ProcessInput()
 			break;
 
 		case 'v': // try to move the current tetramino down one spot
-			CurrentTetramino.TryMoveDown(this);
+			CurrentTetramino.TryMoveDown(this); // TODO lock in place if there is a colision
+			break;
+
+		case 'V': // move the current tetramino down as far as it can go, and lock it in position on the game board
+			while (CurrentTetramino.TryMoveDown(this));
+			XferTetToGrid();
 			break;
 
 		case 't': // print the current tetramino
@@ -237,4 +242,22 @@ void TetrisGame::ClearRow(int Row)
 	return;
 }
 
+void TetrisGame::XferTetToGrid()
+{
+	int TetRow, TetCol;
+	CurrentTetramino.GetPosition(TetRow, TetCol);
+	int TetSize = CurrentTetramino.GetShapeSize();
+
+	for (int r = 0; r < TetSize; r++) // loop though the tetramino
+	{
+		for (int c = 0; c < TetSize; c++)
+		{
+			if (CurrentTetramino.GetShapeDataAtPosition(r, c) != Blank) // transfer the shape to the game board
+			{
+				SetBoardStateAtPosition(TetRow + r, TetCol + c, CurrentTetramino.GetShapeDataAtPosition(r, c));
+			}
+		}
+	}
+	CurrentTetramino.SetTetType(Tetramino::NOTet); // clear the current shape
+}
 

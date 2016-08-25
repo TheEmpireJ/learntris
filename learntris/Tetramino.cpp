@@ -110,6 +110,10 @@ bool Tetramino::TryMoveLeft(TetrisGame * TheGame)
 	{
 		return false;
 	}
+	else if (CheckForCollisionWithGame(RowPos, ColPos - 1, &ShapeData, TheGame)) // check game board collision
+	{
+		return false;
+	}
 	else
 	{
 		ColPos--;
@@ -119,8 +123,11 @@ bool Tetramino::TryMoveLeft(TetrisGame * TheGame)
 
 bool Tetramino::TryMoveRight(TetrisGame * TheGame)
 {
-	// TODO check for colisions with the wall and other board state, for now, just add one to the column position
 	if (ColPos + MaxCol + 1 >= TetrisGame::Cols) // check for wall collisions
+	{
+		return false;
+	}
+	else if(CheckForCollisionWithGame(RowPos, ColPos + 1, &ShapeData, TheGame)) // check game board collision
 	{
 		return false;
 	}
@@ -133,8 +140,11 @@ bool Tetramino::TryMoveRight(TetrisGame * TheGame)
 
 bool Tetramino::TryMoveDown(TetrisGame * TheGame)
 {
-	// TODO check for colisions with the wall and other board state, for now, just add one to the row position
 	if (RowPos + MaxRow + 1 >= TetrisGame::Rows) // check for floor colisions 
+	{
+		return false;
+	}
+	else if (CheckForCollisionWithGame(RowPos + 1, ColPos, &ShapeData, TheGame)) // check for colisions with the game board
 	{
 		return false;
 	}
@@ -199,16 +209,12 @@ bool Tetramino::TryRotateLeft(TetrisGame * TheGame)
 		int CycleMax = ShapeSize - x - 1; // maximum x or y value for this cycle
 		for (int y = x; y < CycleMax; y++) // rotate each element in the cycle
 		{
-			// TempShapeData[y*ShapeSize + CycleMax] = ShapeData[x*ShapeSize + y]; // move top row element to right side
 			TempShapeData[(CycleMax - y + x)*ShapeSize + x] = ShapeData[x*ShapeSize + y]; // move the top row element to the left side
 
-			// TempShapeData[CycleMax*ShapeSize + CycleMax - y + x] = ShapeData[y*ShapeSize + CycleMax]; // move right side element to bottom
 			TempShapeData[CycleMax*ShapeSize + CycleMax - y + x] = ShapeData[(CycleMax - y + x)*ShapeSize + x]; // move the left side element to the bottom
 
-			// TempShapeData[(CycleMax - y + x)*ShapeSize + x] = ShapeData[CycleMax*ShapeSize + CycleMax - y + x]; // move bottom element to left side
 			TempShapeData[y*ShapeSize + CycleMax] = ShapeData[CycleMax*ShapeSize + CycleMax - y + x]; // move the bottom element to the right side
 
-			// TempShapeData[x*ShapeSize + y] = ShapeData[(CycleMax - y + x)*ShapeSize + x]; // move left side element to top
 			TempShapeData[x*ShapeSize + y] = ShapeData[y*ShapeSize + CycleMax]; // move the right side element to the top
 		}
 	}
@@ -246,6 +252,22 @@ void Tetramino::FindExtents()
 		}
 	}
 	//std::cout << "extents are: MinRow: " << MinRow << ", MaxRow: " << MaxRow << ", MinCol: " << MinCol << ", MaxCol: " << MaxCol << std::endl;
+}
+
+bool Tetramino::CheckForCollisionWithGame(int ChkRow, int ChkCol, ShapeGrid * ChkGrid, TetrisGame* Game)
+{
+	for (int r = 0; r < ShapeSize; r++)
+	{
+		for (int c = 0; c < ShapeSize; c++)
+		{
+			// if any non-blank spaces overlap, we have a colision!
+			if (GetShapeDataAtPosition(r, c) != TetrisGame::Blank && Game->GetBoardStateAtPosition(ChkRow + r, ChkCol + c) != TetrisGame::Blank)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 // setting up static const members. Thiese define each shape's initial position and rotation data

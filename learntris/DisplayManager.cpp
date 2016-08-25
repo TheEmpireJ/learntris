@@ -53,8 +53,8 @@ void TetrisDisplayManager::PrintBoardState(TetrisGame* TheGame, Tetramino* Tet) 
 						std::cout << "Y ";
 						continue;
 					case TetrisGame::Blank:
-						std::cout << ". "; // represents blank space
-						continue;
+						// std::cout << ". "; // represents blank space
+						break; // print whatever is on the game board here
 					default:
 						std::cout << "? "; // bad data??
 						continue;
