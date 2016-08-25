@@ -120,6 +120,10 @@ void TetrisGame::ProcessInput()
 			DisplayManager.PrintBoardState(this);
 			break;
 
+		case 'P':
+			DisplayManager.PrintBoardState(this, &CurrentTetramino);
+			break;
+
 		case ';': // print a newline
 			std::cout << std::endl; // TODO handle with the display manager?
 			break;
@@ -142,8 +146,24 @@ void TetrisGame::ProcessInput()
 			Simulate();
 			break;
 
-		case ')': // rotate current tetramino right (clockwise)
+		case ')': // try to rotate current tetramino right (clockwise)
 			CurrentTetramino.TryRotateRight(this);
+			break;
+
+		case '(': // try to rotate the current tetramino left (counter-clockwise)
+			CurrentTetramino.TryRotateLeft(this);
+			break;
+
+		case '<': // try to move the current tetramino left one spot
+			CurrentTetramino.TryMoveLeft(this);
+			break;
+
+		case '>': // try to move the current tetramino left one spot
+			CurrentTetramino.TryMoveRight(this);
+			break;
+
+		case 'v': // try to move the current tetramino down one spot
+			CurrentTetramino.TryMoveDown(this);
 			break;
 
 		case 't': // print the current tetramino

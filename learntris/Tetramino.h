@@ -8,18 +8,24 @@ public:
 	Tetramino();
 	~Tetramino();
 
-	enum TetType { Itet, Otet, Ztet, Stet, Ltet, Jtet, Ttet };
+	enum TetType { Itet, Otet, Ztet, Stet, Ltet, Jtet, Ttet, NOTet };
 	typedef std::array<int, 4*4> ShapeGrid;
 
 	//TetType GetTetType() const;
 	int GetShapeDataAtPosition(int Row, int Col) const;
 	int GetShapeSize() const;
-	//void GetPosition(int &OutRow, int &OutCol);
+	void GetPosition(int &OutRow, int &OutCol);
 
 	// sets the tetramino type and resets to the starting position
 	void SetTetType(TetType type);
+
+	// move and rotate functions! they can fail
+	bool TryMoveLeft(TetrisGame* TheGame);
+	bool TryMoveRight(TetrisGame* TheGame);
+	bool TryMoveDown(TetrisGame* TheGame);
+
 	bool TryRotateRight(TetrisGame* TheGame); // clockwise
-	bool TryRotateLeft(); // counter-clockwise
+	bool TryRotateLeft(TetrisGame* TheGame); // counter-clockwise
 
 
 private:
@@ -31,7 +37,11 @@ private:
 	int RowPos; 
 	int ColPos;
 
-	TetrisGame* CurrentGame;
+	// min and max extents of the shape based on how it is currently rotated
+	int MinRow, MaxRow, MinCol, MaxCol;
+
+	void FindExtents();
+
 
 	static const ShapeGrid IInitialShapeData;
 	static const ShapeGrid OInitialShapeData;

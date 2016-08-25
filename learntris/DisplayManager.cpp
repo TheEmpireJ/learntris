@@ -13,7 +13,7 @@ TetrisDisplayManager::~TetrisDisplayManager()
 }
 
 
-void TetrisDisplayManager::PrintBoardState(TetrisGame* TheGame) const
+void TetrisDisplayManager::PrintBoardState(TetrisGame* TheGame, Tetramino* Tet) const
 {
 	if (!TheGame) { return; } // pointer protection. must have a game to display!
 
@@ -21,6 +21,48 @@ void TetrisDisplayManager::PrintBoardState(TetrisGame* TheGame) const
 	{
 		for (int c = 0; c < TetrisGame::Cols; c++)
 		{
+			if (Tet) // if the tetramino was passed in, see if we need to print a tetramino at this position
+			{
+				int TetRow, TetCol, TetSize;
+				Tet->GetPosition(TetRow, TetCol);
+				TetSize = Tet->GetShapeSize();
+
+				if (c >= TetCol && c < (TetCol + TetSize) && r >= TetRow && r < (TetRow + TetSize)) // if we're in the tetramino's position
+				{
+					switch (Tet->GetShapeDataAtPosition(r - TetRow, c - TetCol)) // TODO make this pretty (add function?)
+					{
+					case TetrisGame::Blue:
+						std::cout << "B ";
+						continue;
+					case TetrisGame::Cyan:
+						std::cout << "C ";
+						continue;
+					case TetrisGame::Green:
+						std::cout << "G ";
+						continue;
+					case TetrisGame::Magenta:
+						std::cout << "M ";
+						continue;
+					case TetrisGame::Orange:
+						std::cout << "O ";
+						continue;
+					case TetrisGame::Red:
+						std::cout << "R ";
+						continue;
+					case TetrisGame::Yellow:
+						std::cout << "Y ";
+						continue;
+					case TetrisGame::Blank:
+						std::cout << ". "; // represents blank space
+						continue;
+					default:
+						std::cout << "? "; // bad data??
+						continue;
+						// TODO why is there bad data?
+					}
+				}
+			}
+
 			switch (TheGame->GetBoardStateAtPosition(r,c))
 			{
 			case TetrisGame::Blue:
@@ -69,16 +111,16 @@ void TetrisDisplayManager::PrintRowsCleared(TetrisGame* TheGame) const
 	std::cout << TheGame->GetRowsCleared() << std::endl;
 }
 
-void TetrisDisplayManager::PrintCurrentTetramino(Tetramino* CurrentTetramino)
+void TetrisDisplayManager::PrintCurrentTetramino(Tetramino* Tet)
 {
-	if (!CurrentTetramino) { return; }
-	int size = CurrentTetramino->GetShapeSize();
+	if (!Tet) { return; }
+	int size = Tet->GetShapeSize();
 
 	for (int r = 0; r < size; r++)
 	{
 		for (int c = 0; c < size; c++)
 		{
-			switch (CurrentTetramino->GetShapeDataAtPosition(r,c))
+			switch (Tet->GetShapeDataAtPosition(r,c))
 			{
 			case TetrisGame::Blue:
 				std::cout << "b ";

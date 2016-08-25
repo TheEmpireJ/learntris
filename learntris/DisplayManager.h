@@ -9,10 +9,10 @@ public:
 	TetrisDisplayManager();
 	~TetrisDisplayManager();
 
-	void PrintBoardState(TetrisGame* TheGame) const;
+	void PrintBoardState(TetrisGame* TheGame, Tetramino* Tet = nullptr) const;
 	void PrintScore(TetrisGame* TheGame) const;
 	void PrintRowsCleared(TetrisGame* TheGame) const;
-	void PrintCurrentTetramino(Tetramino* CurrentTetrimino);
+	void PrintCurrentTetramino(Tetramino* Tet);
 
 private:
 };
