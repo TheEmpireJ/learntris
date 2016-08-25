@@ -48,6 +48,7 @@ void TetrisDisplayManager::PrintBoardState(TetrisGame* TheGame) const
 				std::cout << ". "; // represents blank space
 				break;
 			default:
+				std::cout << "? "; // bad data??
 				break;
 				// TODO why is there bad data?
 			}
@@ -104,6 +105,7 @@ void TetrisDisplayManager::PrintCurrentTetramino(Tetramino* CurrentTetramino)
 				std::cout << ". "; // represents blank space
 				break;
 			default:
+				std::cout << "? "; // bad data??
 				break;
 				// TODO why is there bad data?
 			}

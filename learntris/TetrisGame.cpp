@@ -120,6 +120,10 @@ void TetrisGame::ProcessInput()
 			DisplayManager.PrintBoardState(this);
 			break;
 
+		case ';': // print a newline
+			std::cout << std::endl; // TODO handle with the display manager?
+			break;
+
 		case 'g':  // read in the next lines to set the game board.
 			ReadGameStateFromInput(); // TODO I think there is a bug here if 'g' is not the last thing in the line
 			break;
@@ -136,6 +140,10 @@ void TetrisGame::ProcessInput()
 
 		case 's': // run one step of the simulation
 			Simulate();
+			break;
+
+		case ')': // rotate current tetramino right (clockwise)
+			CurrentTetramino.TryRotateRight(this);
 			break;
 
 		case 't': // print the current tetramino

@@ -18,6 +18,8 @@ public:
 
 	// sets the tetramino type and resets to the starting position
 	void SetTetType(TetType type);
+	bool TryRotateRight(TetrisGame* TheGame); // clockwise
+	bool TryRotateLeft(); // counter-clockwise
 
 
 private:

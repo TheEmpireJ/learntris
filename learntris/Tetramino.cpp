@@ -86,6 +86,43 @@ void Tetramino::SetTetType(TetType type)
 	}
 }
 
+bool Tetramino::TryRotateRight(TetrisGame* TheGame)
+{
+	ShapeGrid TempShapeData;
+
+	// perform the rotation to a temp matrix
+	if (ShapeSize % 2 != 0) // just copy middle element if odd size matrix
+	{
+		int mid = ShapeSize / 2;
+		TempShapeData[mid*ShapeSize + mid] = ShapeData[mid*ShapeSize + mid];
+	}
+
+	for (int x = 0; x < (ShapeSize / 2); x++) // loop though all cycles (there are floor(size/2) cycles)
+	{
+		int CycleMax = ShapeSize - x - 1; // maximum x or y value for this cycle
+		for (int y = x; y < CycleMax; y++) // rotate each element in the cycle
+		{
+			TempShapeData[y*ShapeSize + CycleMax] = ShapeData[x*ShapeSize + y]; // move top row element to left side
+
+			TempShapeData[CycleMax*ShapeSize + CycleMax - y + x] = ShapeData[y*ShapeSize + CycleMax]; // move left side element to bottom
+
+			TempShapeData[(CycleMax - y + x)*ShapeSize + x] = ShapeData[CycleMax*ShapeSize + CycleMax - y + x]; // move bottom element to right side
+
+			TempShapeData[x*ShapeSize + y] = ShapeData[(CycleMax - y + x)*ShapeSize + x]; // move right side element to top
+		}
+	}
+	//TODO check if the tetramino is able to rotote. For now, just copy the temp shape to the real shape
+	for (int r = 0; r < ShapeSize; r++)
+	{
+		for (int c = 0; c < ShapeSize; c++)
+		{
+			ShapeData[r*ShapeSize + c] = TempShapeData[r*ShapeSize + c];
+		}
+	}
+
+	return true; // TODO change to check if the rotation succeeds
+}
+
 // setting up static const members. Thiese define each shape's initial position and rotation data
 const Tetramino::ShapeGrid Tetramino::IInitialShapeData = {
 	TetrisGame::Blank, TetrisGame::Blank, TetrisGame::Blank, TetrisGame::Blank,
